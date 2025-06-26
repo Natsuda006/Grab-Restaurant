@@ -89,8 +89,8 @@ const Delete = () => {
       )}
         </div>
       <div className="flex flex-center justify-center gap-4 mt-6">
-        <a className="btn btn-outline btn-primary" onClick={handleSubmit}>Delete</a>
-        <a className="btn btn-outline btn-secondary">Cancel</a>
+        <a className="btn btn-outline btn-secondary" onClick={handleSubmit}>Delete</a>
+        <a className="btn btn-outline btn-primary">Cancel</a>
       </div>
     </div>
   )

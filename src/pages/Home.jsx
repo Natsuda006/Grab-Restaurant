@@ -3,6 +3,25 @@ import Navbar from "../components/Navbar";
 import Restauant from "../components/Restauant";
 const Home = () => {
 const [restaurants, setRestaurants] = useState([]);
+const [keyword, setKeyword] = useState("");
+const [filterRestaurants, setFilterRestaurants] = useState([]);
+const handleSearch = (e) =>{
+  setKeyword(e.target.value);
+  if(e.target.value === ""){
+      setFilterRestaurants(restaurants)
+    return;
+  }
+  const result = restaurants.filter((restaurant) =>{
+    return (
+      restaurant.title.toLowerCase().includes(keyword.toLowerCase()) ||
+      restaurant.type.toLowerCase().includes(keyword.toLowerCase())
+    );
+  });
+  //console.log(result)
+  setFilterRestaurants(result)
+  return;
+}
+
   useEffect(() => {
     //call api: getAllRestaurants
     fetch("http://localhost:3000/restaurants").then((res)=>{
@@ -11,6 +30,7 @@ const [restaurants, setRestaurants] = useState([]);
     }).then((Response)=>{
       //save to state
       setRestaurants(Response)
+      setFilterRestaurants(Response)
     }).catch((err)=> {
       //catch error
       console.log(err.message);
@@ -42,14 +62,14 @@ const [restaurants, setRestaurants] = useState([]);
               <path d="m21 21-4.3-4.3"></path>
             </g>
           </svg>
-          <input type="search" required placeholder="Search" />
+          <input type="search" name = "keyword" onChange={handleSearch} required placeholder="Search"/>
         </label>
       </div>
       <div>
-        <Restauant restaurants = {restaurants}/>
+        <Restauant restaurants = {filterRestaurants}/>
       </div>
     </div>
-  );
+  );   
 };
 
 export default Home;
